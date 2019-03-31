@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="xxx">
+        <title></title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+           
+            .view {
+                perspective: 1000px;
+            }
+            .box {
+                height: 500px;
+                transform-style: preserve-3d;
+                position: relative;
+                transform: translateZ(-300px);
+                transition: all .5s;
+            }
+            .box img {
+                width: 100%;
+                height: 500px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .box img:nth-child(1){
+                transform: translateZ(250px);
+            }
+            .box img:nth-child(2){
+                transform: rotateX(-90deg) translateZ(250px);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="view">
+            <div class="box">
+                <img src="../images/08.jpg" >
+                <img src="../images/09.jpg" >
+            </div>
+        </div>
+        <button id="next">下一张</button>
+    </body>
+    <script>
+        var box=document.getElementsByClassName("box")[0];
+        var arr=["08.jpg","09.jpg","10.jpg","11.jpg"];
+        var flag=true;
+        next.onclick=function(){
+           if(flag){
+               flag=false;
+            box.style.transform="translateZ(-250px) rotateX(90deg)";
+           }
+        }
+        var x=0;
+        box.addEventListener("transitionend",function(){
+            //处理第一个img的src;
+            x++;
+            box.style.transition="all 0s";
+            box.style.transform="translateZ(-250px) rotateX(0deg)";
+            box.children[0].src="../images/"+arr[x];
+            //处理第二个img的src
+            if(x>arr.length-2){
+                x=-1;
+            }
+            box.children[1].src="../images/"+arr[x+1];
+            setTimeout(function(){
+                box.style.transition="all .5s";
+            },16.7)
+            flag=true;
+        })
+    </script>
+</html>
